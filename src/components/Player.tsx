@@ -106,9 +106,7 @@ const Player: React.FC<PlayerProps> = ({
   onTimeUpdate,
 }) => {
   const {
-    audioRef,
     iframeContainerRef,
-    sourceType,
     isPlaying,
     currentTime,
     duration,
@@ -140,7 +138,6 @@ const Player: React.FC<PlayerProps> = ({
 
   return (
     <>
-      {/* Hidden YouTube iframe container — API controlled, no visible video */}
       <div
         style={{
           position: "fixed",
@@ -319,15 +316,6 @@ const Player: React.FC<PlayerProps> = ({
             </button>
           </div>
         </div>
-
-        {/* Audio element for local mp3 */}
-        {sourceType === "audio" && (
-          <audio
-            ref={audioRef as any}
-            src={trackSrc}
-            onEnded={() => onNext?.()}
-          />
-        )}
       </div>
     </>
   );

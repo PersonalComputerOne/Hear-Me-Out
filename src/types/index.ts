@@ -5,8 +5,8 @@ export interface LyricLine {
 
 export interface Track {
   title: string;
-  src?: string; // local mp3 — MCR only
-  youtubeId?: string; // YouTube iframe — Mayday + Neck Deep
+  src?: string;
+  youtubeId?: string;
   name?: string;
   duration?: number;
   album?: string;

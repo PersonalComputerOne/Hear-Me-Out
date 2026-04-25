@@ -4,7 +4,7 @@ import { Track } from "../types";
 interface Props {
   tracks: Track[];
   onSelect: (src: string | undefined, index: number) => void;
-  activeIndex: number; // replace activeSrc with this
+  activeIndex: number;
   bandName: string;
 }
 

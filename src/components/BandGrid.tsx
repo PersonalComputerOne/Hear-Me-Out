@@ -149,9 +149,6 @@ const BandCard = ({ band, theme, onSelect }: any) => {
           className="w-full h-auto max-h-[45vh] object-contain transition-all duration-1000 transform translate-y-2"
         />
       </div>
-
-      {/* --- LAYER 4: REMOVED BLACK GRADIENT --- */}
-      {/* We removed the black gradient from-black/60 to ensure the gray stays gray */}
     </div>
   );
 };

@@ -5,8 +5,8 @@ interface LyricsProps {
   currentTime: number;
   trackTitle: string;
   bandName: string;
-  duration: number; // add this
-  localLyrics?: { time: number; text: string }[]; // renamed, now optional
+  duration: number;
+  localLyrics?: { time: number; text: string }[];
   isFocused: boolean;
   onToggleFocus: () => void;
 }
@@ -60,7 +60,6 @@ const LyricsPage: React.FC<LyricsProps> = ({
         <p className="text-white uppercase tracking-[0.3em] text-[10px] font-bold">
           {bandName}
         </p>
-        {/* Small source badge — remove if you don't want it */}
       </div>
 
       {/* Lyrics scroll */}
