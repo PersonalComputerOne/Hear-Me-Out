@@ -1,0 +1,217 @@
+import { Band } from "../types";
+
+export const bands: Band[] = [
+  {
+    id: 1,
+    name: "My Chemical\nRomance",
+    image: "/assets/mcr.jpg",
+    imageSrc: "/assets/mcr.png",
+    discImg: "/assets/mcr.jpg",
+    audioSrc: "/audio/mcr/black-parade.mp3",
+    mbid: "7527f6c2-d762-4b88-b5e2-9244f1e34c46",
+    description:
+      "My Chemical Romance (MCR) is a foundational pillar of modern alternative rock, originating from New Jersey in the early 2000s and quickly rising to prominence with their intense blend of punk aggression, emotional storytelling, and theatrical presentation. Fronted by Gerard Way, the band became closely associated with the mainstream understanding of “emo” culture, not just because of their sound, but also due to their striking visual identity that combined gothic imagery, comic-book influences.",
+    tracks: [
+      {
+        title: "Helena",
+        album: "Three Cheers for Sweet Revenge",
+        youtubeId: "UCCyoocDxBA",
+        duration: 209,
+      },
+      {
+        title: "The Ghost of You",
+        album: "Three Cheers for Sweet Revenge",
+        youtubeId: "-3-oY9rpJk8",
+        duration: 203,
+      },
+      {
+        title: "I'm Not Okay (I Promise)",
+        album: "Three Cheers for Sweet Revenge",
+        youtubeId: "dhZTNgAs4Fc",
+        duration: 205,
+      },
+      {
+        title: "Welcome to the Black Parade",
+        album: "The Black Parade",
+        youtubeId: "RRKJiM9Njr8",
+        duration: 315,
+      },
+      {
+        title: "Cancer",
+        album: "The Black Parade",
+        youtubeId: "wc2s9skF_58",
+        duration: 143,
+      },
+      {
+        title: "Teenagers",
+        album: "The Black Parade",
+        youtubeId: "5G5BnlBuozU",
+        duration: 163,
+      },
+      {
+        title: "Famous Last Words",
+        album: "The Black Parade",
+        youtubeId: "8bbTtPL1jRs",
+        duration: 261,
+      },
+      {
+        title: "Disenchanted",
+        album: "The Black Parade",
+        youtubeId: "j_MlBCb9-m8",
+        duration: 295,
+      },
+      {
+        title: "The World Is Ugly",
+        album: "Danger Days: The True Lives of the Fabulous Killjoys",
+        youtubeId: "g4sEl_sBZjU",
+        duration: 301,
+      },
+      {
+        title: "I Don't Love You",
+        album: "The Black Parade",
+        youtubeId: "pyi0ZfuIIvo",
+        duration: 236,
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "Mayday\nParade",
+    description:
+      "Mayday Parade is a quintessential emo-pop band that emerged from the Tallahassee, Florida scene, known for their ability to craft heart-wrenching melodies, emotionally charged lyrics, and soaring, anthemic choruses. They rose to prominence with their debut album A Lesson in Romantics, which became a defining record of the late-2000s emo revival, showcasing their signature blend of dual-vocal harmonies and deeply personal songwriting centered on heartbreak, longing, and youthful emotional turmoil.",
+    image: "/assets/mayday.jpg",
+    imageSrc: "/assets/mayday.png",
+    discImg: "/assets/mayday.jpg",
+    audioSrc: "/audio/mayday-1.mp3",
+    mbid: "e8db6d72-a4e3-4c76-bf26-6cd921538abd",
+    tracks: [
+      {
+        title: "Jamie All Over",
+        youtubeId: "DZaK37dheCM",
+        album: "A Lesson in Romantics",
+        duration: 218,
+      },
+      {
+        title: "Miserable at Best",
+        youtubeId: "xzrC1v7M7XI",
+        album: "A Lesson in Romantics",
+        duration: 317,
+      },
+      {
+        title: "Terrible Things",
+        youtubeId: "bllr63yMszw",
+        album: "Anywhere but Here",
+        duration: 238,
+      },
+      {
+        title: "Three Cheers for Five Years",
+        youtubeId: "pQRrILkmv-E",
+        album: "A Lesson in Romantics",
+        duration: 290,
+      },
+      {
+        title: "Stay",
+        youtubeId: "CAfNjdcgp4E",
+        album: "A Lesson in Romantics",
+        duration: 218,
+      },
+      {
+        title: "I Swear This Time I Mean It",
+        youtubeId: "L9s7csH8Uz8",
+        album: "A Lesson in Romantics",
+        duration: 242,
+      },
+      {
+        title: "Oh Well, Oh Well",
+        youtubeId: "ShfTOIAot3A",
+        album: "Mayday Parade (2011)",
+        duration: 288,
+      },
+      {
+        title: "Jersey",
+        youtubeId: "Z9yJ3Xg7x8s",
+        album: "Anywhere but Here",
+        duration: 209,
+      },
+      {
+        title: "Piece of Your Heart",
+        youtubeId: "wYURYvj9Meo",
+        album: "Sunnyland",
+        duration: 219,
+      },
+      {
+        title: "Save Your Heart",
+        youtubeId: "sOKby2y9Ahs",
+        album: "Mayday Parade (2011)",
+        duration: 222,
+      },
+    ],
+  },
+  {
+    id: 3,
+    name: "Neck Deep",
+    description:
+      "Hailing from Wrexham, Wales, Neck Deep has become one of the most prominent voices in the modern pop-punk revival, carrying forward the influence of bands like Blink-182 and New Found Glory while shaping a sound that feels distinctly their own. Emerging in the early 2010s, they quickly gained attention for their energetic blend of fast-paced guitar riffs, skate-punk rhythms, and highly melodic, emotionally charged choruses that resonated with a new generation of listeners.",
+    image: "/assets/neckdeep.jpg",
+    imageSrc: "/assets/neckdeep.png",
+    discImg: "/assets/neckdeep.jpg",
+    audioSrc: "/audio/neckdeep-1.mp3",
+    mbid: "0b4a9fa3-d8d7-4ebe-8a0f-0b3cb40d6a24",
+    tracks: [
+      {
+        title: "In Bloom",
+        youtubeId: "RPzf_4dcL28",
+        album: "The Peace and the Panic",
+        duration: 218,
+      },
+      {
+        title: "December",
+        youtubeId: "8NnQs3EtoqU",
+        album: "Life's Not Out to Get You",
+        duration: 218,
+      },
+      {
+        title: "Gold Steps",
+        youtubeId: "LZcXhfT5gYA",
+        album: "Life's Not Out to Get You",
+        duration: 194,
+      },
+      {
+        title: "Critical Mistake",
+        youtubeId: "H7fWyVaMtAk",
+        album: "The Peace and the Panic",
+        duration: 195,
+      },
+      {
+        title: "Can't Kick Up the Roots",
+        youtubeId: "d6uIsM7s6pY",
+        album: "Life's Not Out to Get You",
+        duration: 170,
+      },
+      {
+        title: "Motion Sickness",
+        youtubeId: "ZMorM6M2IlI",
+        album: "The Peace and the Panic",
+        duration: 221,
+      },
+      {
+        title: "Wish You Were Here",
+        youtubeId: "VyPwEZTIpVc",
+        album: "The Peace and the Panic",
+        duration: 248,
+      },
+      {
+        title: "A Part of Me",
+        youtubeId: "50ulyAHlEmo",
+        album: "Rain In July / A History Of Bad Decisions",
+        duration: 190,
+      },
+      {
+        title: "Serpents",
+        youtubeId: "ReXRXxbeZ_I",
+        album: "Life's Not Out to Get You",
+        duration: 165,
+      },
+    ],
+  },
+];
