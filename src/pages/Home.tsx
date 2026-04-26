@@ -74,7 +74,10 @@ const Home: React.FC = () => {
   );
 
   return (
-    <div className="fixed h-screen w-full bg-black flex flex-col overflow-hidden">
+    <div
+      className="fixed w-full bg-black flex flex-col overflow-hidden"
+      style={{ height: "100dvh" }}
+    >
       <Header
         isHome={isHome}
         menuOpen={menuOpen}
