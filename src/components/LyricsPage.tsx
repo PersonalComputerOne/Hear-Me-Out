@@ -21,8 +21,8 @@ const LyricsPage: React.FC<LyricsProps> = ({
   onToggleFocus,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
+  const activeRef = useRef<HTMLParagraphElement>(null);
 
-  // Replaces hardcoded lyrics — fetches from LRCLIB, falls back to localLyrics
   const { lyrics, loading } = useSyncedLyrics(
     bandName,
     trackTitle,
@@ -35,9 +35,11 @@ const LyricsPage: React.FC<LyricsProps> = ({
   }, 0);
 
   useEffect(() => {
-    const activeElement = document.getElementById(`lyric-${activeIndex}`);
-    if (activeElement && scrollRef.current) {
-      activeElement.scrollIntoView({ behavior: "smooth", block: "center" });
+    if (activeRef.current && scrollRef.current) {
+      activeRef.current.scrollIntoView({
+        behavior: "smooth",
+        block: "center",
+      });
     }
   }, [activeIndex]);
 
@@ -65,14 +67,14 @@ const LyricsPage: React.FC<LyricsProps> = ({
       {/* Lyrics scroll */}
       <div
         ref={scrollRef}
-        className="flex-1 overflow-y-auto py-2 px-8 md:px-16 no-scrollbar relative"
+        className="flex-1 overflow-y-auto py-2 px-6 md:px-16 no-scrollbar relative"
         style={{
           msOverflowStyle: "none",
           scrollbarWidth: "none",
           WebkitMaskImage:
-            "linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)",
           maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 10%, black 80%, transparent 100%)",
+            "linear-gradient(to bottom, transparent 0%, black 15%, black 80%, transparent 100%)",
         }}
       >
         <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
@@ -99,22 +101,25 @@ const LyricsPage: React.FC<LyricsProps> = ({
         <div className="flex flex-col">
           {lyrics.map((line, i) => {
             const isActive = i === activeIndex;
-            const lyricClasses = `text-2xl md:text-4xl py-4 md:py-6 font-black leading-tight tracking-tighter transition-all duration-500 origin-left ${
-              isActive
-                ? "text-white opacity-100 scale-105 blur-none"
-                : "text-black opacity-80 scale-100 hover:opacity-40"
-            }`;
             return (
               <p
                 id={`lyric-${i}`}
                 key={`${i}-${line.time}`}
-                className={lyricClasses}
+                ref={isActive ? activeRef : null}
+                className={`text-2xl md:text-4xl py-3 md:py-6 font-black leading-tight tracking-tighter transition-all duration-500 origin-left ${
+                  isActive
+                    ? "text-white opacity-100 scale-105"
+                    : "text-black opacity-80 scale-100"
+                }`}
               >
                 {line.text}
               </p>
             );
           })}
         </div>
+
+        {/* Spacer at bottom */}
+        <div className="h-16" />
       </div>
     </div>
   );

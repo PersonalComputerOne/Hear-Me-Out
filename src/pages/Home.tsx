@@ -92,9 +92,14 @@ const Home: React.FC = () => {
         setShowSelector={() => {}}
       />
 
-      <div
-        className={`flex-1 flex flex-col min-h-0 ${menuOpen ? "hidden md:flex" : "flex"}`}
-      >
+      {/* Overlay to close menu when clicking outside */}
+      {menuOpen && (
+        <div
+          className={`flex-1 flex flex-col min-h-0 ${menuOpen ? "hidden md:flex" : "flex"}`}
+        />
+      )}
+
+      <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {isHome ? (
           <div className="flex-1">
             <BandGrid bands={bands} onSelect={(id) => selectBand(id)} />
@@ -102,6 +107,7 @@ const Home: React.FC = () => {
         ) : (
           <>
             <BandDashboard
+              key={selectedBandId}
               band={selected}
               currentTrackIndex={currentTrackIndex}
               currentTrackSrc={currentTrackSrc}

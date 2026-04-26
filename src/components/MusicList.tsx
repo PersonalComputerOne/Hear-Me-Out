@@ -5,28 +5,40 @@ interface Props {
   tracks: Track[];
   onSelect: (src: string | undefined, index: number) => void;
   activeIndex: number;
+  activeDuration?: number;
   bandName: string;
 }
+
+const format = (s: number) => {
+  const mm = Math.floor(s / 60)
+    .toString()
+    .padStart(2, "0");
+  const ss = Math.floor(s % 60)
+    .toString()
+    .padStart(2, "0");
+  return `${mm}:${ss}`;
+};
 
 const MusicList: React.FC<Props> = ({
   tracks,
   onSelect,
   activeIndex,
+  activeDuration,
   bandName,
 }) => {
   return (
-    <div className="w-full h-full flex flex-col bg-white rounded-b-none rounded-t-2xl overflow-hidden shadow-2xl border border-gray-100">
-      <div className="p-2 md:p-4 border-b border-gray-100 bg-white">
+    <div className="w-full h-full flex flex-col bg-white overflow-hidden shadow-2xl border border-gray-100 md:rounded-t-2xl">
+      <div className="p-2 md:p-4 border-b border-gray-100 bg-white shrink-0">
         <h3 className="text-md md:text-lg font-black text-black uppercase tracking-tighter">
           Music List
         </h3>
       </div>
-
       <ul className="flex-1 overflow-y-auto p-2 md:p-4 space-y-1 md:space-y-2 no-scrollbar bg-white">
         <style>{`.no-scrollbar::-webkit-scrollbar { display: none; }`}</style>
         {tracks.map((t, i) => {
           const isActive = i === activeIndex;
-
+          const displayDuration =
+            isActive && activeDuration ? activeDuration : t.duration;
           return (
             <li
               key={i}
@@ -57,6 +69,9 @@ const MusicList: React.FC<Props> = ({
                     {bandName}
                   </div>
                 </div>
+              </div>
+              <div className="text-xs opacity-60 ml-4 flex-shrink-0">
+                {displayDuration ? format(displayDuration) : "00:00"}
               </div>
             </li>
           );

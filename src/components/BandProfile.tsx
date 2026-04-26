@@ -8,7 +8,6 @@ interface Props {
 
 const BandProfile: React.FC<Props> = ({ band }) => {
   const [isFlipped, setIsFlipped] = useState(false);
-
   const theme = bandThemes[band.id];
 
   const paletteBg = theme?.palette
@@ -17,21 +16,26 @@ const BandProfile: React.FC<Props> = ({ band }) => {
 
   return (
     <div
-      className="group w-full h-[450px] md:h-full perspective-1000 cursor-pointer"
+      className="group w-full h-full cursor-pointer"
+      style={{ perspective: "1000px" }}
       onClick={() => setIsFlipped(!isFlipped)}
     >
       <div
-        className={`relative w-full h-full transition-transform duration-700 preserve-3d ${
-          isFlipped ? "rotate-y-180" : ""
-        }`}
+        className="relative w-full h-full transition-transform duration-700"
+        style={{
+          transformStyle: "preserve-3d",
+          transform: isFlipped ? "rotateY(180deg)" : "rotateY(0deg)",
+        }}
       >
-        {/* FRONT SIDE */}
-
+        {/* FRONT */}
         <div
-          className="absolute inset-none md:inset-0 backface-hidden rounded-b-none rounded-t-2xl overflow-hidden flex flex-col items-center"
-          style={{ background: paletteBg }}
+          className="absolute inset-0 overflow-hidden flex flex-col items-center md:rounded-t-2xl"
+          style={{
+            background: paletteBg,
+            backfaceVisibility: "hidden",
+          }}
         >
-          <div className="pt-20 z-20 px-8 text-center">
+          <div className="pt-12 md:pt-20 z-20 px-8 text-center">
             <h2
               className="text-3xl md:text-5xl uppercase tracking-[0.2em] text-white"
               style={{
@@ -42,29 +46,24 @@ const BandProfile: React.FC<Props> = ({ band }) => {
               {band.name}
             </h2>
           </div>
-
           <div className="mt-auto w-full flex justify-center items-end z-30">
             <img
               src={band.imageSrc}
               alt={band.name}
-              className="w-full h-auto max-h-[45vh] object-contain transition-all duration-1000 transform translate-y-2 grayscale group-hover:grayscale-0"
+              className="w-full h-auto max-h-[55vh] object-contain transition-all duration-1000 grayscale group-hover:grayscale-0"
             />
           </div>
         </div>
 
-        {/* BACK SIDE */}
-
-        <div className="absolute inset-none md:inset-0 backface-hidden rotate-y-180 rounded-b-none rounded-t-2xl flex flex-col px-8 py-4 overflow-hidden">
-          {/* Base gray layer */}
-          <div
-            className="absolute inset-0 z-10"
-            style={{ backgroundColor: "#4c5564" }}
-          />
-
-          {/* Palette layer (revealed on hover) */}
-          <div className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100 z-0" />
-
-          {/* Content */}
+        {/* BACK */}
+        <div
+          className="absolute inset-0 flex flex-col px-8 py-4 overflow-hidden md:rounded-t-2xl"
+          style={{
+            backgroundColor: "#4c5564",
+            backfaceVisibility: "hidden",
+            transform: "rotateY(180deg)",
+          }}
+        >
           <div className="relative z-20 flex flex-col h-full">
             <h2
               className="mt-8 text-center text-xl md:text-3xl uppercase tracking-widest text-white mb-6 border-b border-white/20 pb-4"
@@ -72,25 +71,16 @@ const BandProfile: React.FC<Props> = ({ band }) => {
             >
               {band.name}
             </h2>
-
             <div className="flex-1 overflow-y-auto custom-scrollbar">
               <p className="text-white text-justify text-sm md:text-lg leading-relaxed font-medium">
                 {band.description || "No description available for this band."}
               </p>
-            </div>
-
-            <div className="mt-4 flex justify-end">
-              {/* Spinning Disc component would go here */}
             </div>
           </div>
         </div>
       </div>
 
       <style>{`
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .backface-hidden { backface-visibility: hidden; }
-        .rotate-y-180 { transform: rotateY(180deg); }
         .custom-scrollbar::-webkit-scrollbar { width: 4px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
       `}</style>
