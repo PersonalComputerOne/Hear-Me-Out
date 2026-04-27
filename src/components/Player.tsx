@@ -93,6 +93,7 @@ interface PlayerProps {
   onNext?: () => void;
   onPrev?: () => void;
   onTimeUpdate: (time: number) => void;
+  onSeekReady?: (seek: (time: number) => void) => void; // add this
 }
 
 const Player: React.FC<PlayerProps> = ({
@@ -104,6 +105,7 @@ const Player: React.FC<PlayerProps> = ({
   onNext,
   onPrev,
   onTimeUpdate,
+  onSeekReady, // add this
 }) => {
   const {
     iframeContainerRef,
@@ -118,6 +120,10 @@ const Player: React.FC<PlayerProps> = ({
   const [volume, setVolumeState] = useState(0.5);
   const [prevVolume, setPrevVolume] = useState(0.5);
   const [isMaximized, setIsMaximized] = useState(false);
+
+  useEffect(() => {
+    onSeekReady?.(seek);
+  }, [seek, onSeekReady]);
 
   useEffect(() => {
     onTimeUpdate(currentTime);

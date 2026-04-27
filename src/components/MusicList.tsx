@@ -19,6 +19,8 @@ const format = (s: number) => {
   return `${mm}:${ss}`;
 };
 
+const systemFont = "system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+
 const MusicList: React.FC<Props> = ({
   tracks,
   onSelect,
@@ -29,7 +31,10 @@ const MusicList: React.FC<Props> = ({
   return (
     <div className="w-full h-full flex flex-col bg-white overflow-hidden shadow-2xl border border-gray-100 md:rounded-t-2xl">
       <div className="p-2 md:p-4 border-b border-gray-100 bg-white shrink-0">
-        <h3 className="text-md md:text-lg font-black text-black uppercase tracking-tighter">
+        <h3
+          className="text-md md:text-lg font-black text-black uppercase tracking-tighter"
+          style={{ fontFamily: systemFont }}
+        >
           Music List
         </h3>
       </div>
@@ -54,23 +59,31 @@ const MusicList: React.FC<Props> = ({
                   className={`text-[10px] font-bold w-4 flex-shrink-0 ${
                     isActive ? "text-white/40" : "text-gray-300"
                   }`}
+                  style={{ fontFamily: systemFont }}
                 >
                   {isActive ? "→" : (i + 1).toString().padStart(2, "0")}
                 </span>
                 <div className="min-w-0 truncate">
-                  <div className="font-black text-md truncate">
+                  <div
+                    className="font-black text-md truncate"
+                    style={{ fontFamily: systemFont }}
+                  >
                     {t.title || "Unknown Title"}
                   </div>
                   <div
                     className={`text-sm tracking-widest font-bold truncate ${
                       isActive ? "text-white/50" : "text-gray-400"
                     }`}
+                    style={{ fontFamily: systemFont }}
                   >
                     {bandName}
                   </div>
                 </div>
               </div>
-              <div className="text-xs opacity-60 ml-4 flex-shrink-0">
+              <div
+                className="text-xs opacity-60 ml-4 flex-shrink-0"
+                style={{ fontFamily: systemFont }}
+              >
                 {displayDuration ? format(displayDuration) : "00:00"}
               </div>
             </li>

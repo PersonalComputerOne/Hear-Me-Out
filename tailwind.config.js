@@ -3,13 +3,16 @@ module.exports = {
   darkMode: false,
   theme: {
     extend: {
-      colors: {
-        // Custom colors can be added here
-      },
+      colors: {},
       spacing: {
         128: "26rem",
-        83: "21rem", // Adds h-83, w-83, p-83, etc.
-        23: "5.75rem", // Adds h-23, w-23, p-23, etc.
+        83: "21rem",
+        23: "5.75rem",
+      },
+      fontFamily: {
+        monoton: ["'Monoton'", "cursive"],
+        rubik: ["'Rubik Mono One'", "monospace"],
+        montserrat: ["'Montserrat'", "sans-serif"],
       },
     },
   },

@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import Header from "../components/Header";
 import Player from "../components/Player";
 import BandGrid from "../components/BandGrid";
@@ -13,6 +13,7 @@ const Home: React.FC = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
   const [loadedTracks, setLoadedTracks] = useState<Track[]>([]);
+  const seekRef = useRef<((time: number) => void) | null>(null);
 
   const {
     currentTrackIndex,
@@ -73,6 +74,10 @@ const Home: React.FC = () => {
     ],
   );
 
+  const handleSeek = useCallback((time: number) => {
+    seekRef.current?.(time);
+  }, []);
+
   return (
     <div
       className="fixed w-full bg-black flex flex-col overflow-hidden"
@@ -95,13 +100,6 @@ const Home: React.FC = () => {
         setShowSelector={() => {}}
       />
 
-      {/* Overlay to close menu when clicking outside */}
-      {menuOpen && (
-        <div
-          className={`flex-1 flex flex-col min-h-0 ${menuOpen ? "hidden md:flex" : "flex"}`}
-        />
-      )}
-
       <div className="flex-1 flex flex-col min-h-0 overflow-hidden">
         {isHome ? (
           <div className="flex-1">
@@ -120,6 +118,7 @@ const Home: React.FC = () => {
               onToggleFocus={() => setIsFocused(!isFocused)}
               onSelectTrack={updateTrack}
               onTracksLoaded={handleTracksLoaded}
+              onSeek={handleSeek}
             />
 
             <Player
@@ -129,6 +128,9 @@ const Home: React.FC = () => {
               trackTitle={currentTrackTitle}
               trackAlbum={currentTrackAlbum}
               onTimeUpdate={setCurrentTime}
+              onSeekReady={(fn) => {
+                seekRef.current = fn;
+              }}
               onNext={() => {
                 if (loadedTracks.length > 0)
                   updateTrack((currentTrackIndex + 1) % loadedTracks.length);

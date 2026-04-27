@@ -6,6 +6,8 @@ import BandProfile from "./BandProfile";
 
 type MobileTab = "list" | "lyrics" | "profile";
 
+const systemFont = "system-ui, -apple-system, BlinkMacSystemFont, sans-serif";
+
 interface Props {
   band: Band;
   currentTrackIndex: number;
@@ -16,6 +18,7 @@ interface Props {
   onToggleFocus: () => void;
   onSelectTrack: (index: number) => void;
   onTracksLoaded: (tracks: Track[]) => void;
+  onSeek: (time: number) => void;
 }
 
 const BandDashboard: React.FC<Props> = ({
@@ -28,6 +31,7 @@ const BandDashboard: React.FC<Props> = ({
   onToggleFocus,
   onSelectTrack,
   onTracksLoaded,
+  onSeek,
 }) => {
   const [mobileTab, setMobileTab] = useState<MobileTab>("list");
   const tracks = band.tracks ?? [];
@@ -48,6 +52,7 @@ const BandDashboard: React.FC<Props> = ({
           <button
             key={tab}
             onClick={() => setMobileTab(tab)}
+            style={{ fontFamily: systemFont }}
             className={`flex-1 py-2 text-xs font-bold uppercase tracking-widest transition-all ${
               mobileTab === tab
                 ? "text-black border-2 border-black bg-white"
@@ -65,7 +70,6 @@ const BandDashboard: React.FC<Props> = ({
           mobileTab === "list" ? "flex flex-col flex-1" : "hidden md:block"
         }`}
       >
-        {/* No radius on mobile, rounded on desktop */}
         <div className="w-full h-full md:rounded-t-2xl overflow-hidden">
           <MusicList
             tracks={tracks}
@@ -94,6 +98,7 @@ const BandDashboard: React.FC<Props> = ({
             localLyrics={currentTrack?.lyrics}
             isFocused={isFocused}
             onToggleFocus={onToggleFocus}
+            onSeek={onSeek}
           />
         </div>
       </div>

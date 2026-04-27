@@ -16,7 +16,7 @@ export const bands: Band[] = [
         title: "Helena",
         album: "Three Cheers for Sweet Revenge",
         youtubeId: "UCCyoocDxBA",
-        duration: 209,
+        duration: 208,
       },
       {
         title: "The Ghost of You",

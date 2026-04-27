@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 import { useSyncedLyrics } from "../hooks/useSyncedLyrics";
 
 interface LyricsProps {
@@ -9,6 +9,7 @@ interface LyricsProps {
   localLyrics?: { time: number; text: string }[];
   isFocused: boolean;
   onToggleFocus: () => void;
+  onSeek?: (time: number) => void;
 }
 
 const LyricsPage: React.FC<LyricsProps> = ({
@@ -19,9 +20,13 @@ const LyricsPage: React.FC<LyricsProps> = ({
   localLyrics,
   isFocused,
   onToggleFocus,
+  onSeek,
 }) => {
   const scrollRef = useRef<HTMLDivElement>(null);
-  const activeRef = useRef<HTMLParagraphElement>(null);
+  const lineRefs = useRef<Map<number, HTMLParagraphElement>>(new Map());
+  const userScrollingRef = useRef(false);
+  const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const lastActiveIndex = useRef(-1);
 
   const { lyrics, loading } = useSyncedLyrics(
     bandName,
@@ -34,27 +39,67 @@ const LyricsPage: React.FC<LyricsProps> = ({
     return currentTime >= line.time ? index : acc;
   }, 0);
 
-  useEffect(() => {
-    if (activeRef.current && scrollRef.current) {
-      activeRef.current.scrollIntoView({
+  const scrollToLine = useCallback((index: number) => {
+    const el = lineRefs.current.get(index);
+    if (el && scrollRef.current) {
+      el.scrollIntoView({
         behavior: "smooth",
         block: "center",
       });
     }
-  }, [activeIndex]);
+  }, []);
+
+  // Auto-scroll when active line changes
+  useEffect(() => {
+    if (userScrollingRef.current) return;
+    lastActiveIndex.current = activeIndex;
+    scrollToLine(activeIndex);
+  }, [activeIndex, scrollToLine]);
+
+  // Detect manual scroll — pause auto-scroll for 3 seconds
+  const handleScroll = () => {
+    userScrollingRef.current = true;
+    if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+    scrollTimeoutRef.current = setTimeout(() => {
+      userScrollingRef.current = false;
+    }, 3000);
+  };
+
+  // Reset refs when lyrics change
+  useEffect(() => {
+    lineRefs.current.clear();
+    lastActiveIndex.current = -1;
+  }, [lyrics]);
+
+  const handleLineClick = useCallback(
+    (e: React.MouseEvent, time: number, index: number) => {
+      e.stopPropagation();
+      // Clear any user scroll lock immediately
+      userScrollingRef.current = false;
+      if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
+      // Seek the audio
+      onSeek?.(time);
+      // Scroll immediately
+      scrollToLine(index);
+      // Scroll again after seek settles
+      setTimeout(() => {
+        userScrollingRef.current = false;
+        scrollToLine(index);
+      }, 300);
+    },
+    [onSeek, scrollToLine],
+  );
 
   return (
-    <div
-      className="w-full h-full flex flex-col bg-gray-600 transition-all duration-700 cursor-pointer overflow-hidden select-none"
-      onClick={onToggleFocus}
-    >
+    <div className="w-full h-full flex flex-col bg-gray-600 transition-all duration-700 overflow-hidden select-none">
       {/* Header */}
       <div
-        className={`shrink-0 transition-all duration-700 ease-in-out ${
+        className={`shrink-0 transition-all duration-700 ease-in-out cursor-pointer ${
           isFocused
             ? "max-h-0 opacity-0 -translate-y-10 p-0"
             : "max-h-40 p-4 md:p-8 opacity-100 translate-y-0"
         }`}
+        onClick={onToggleFocus}
       >
         <h1 className="text-lg md:text-2xl font-black text-white truncate tracking-tighter italic uppercase">
           {trackTitle}
@@ -67,6 +112,7 @@ const LyricsPage: React.FC<LyricsProps> = ({
       {/* Lyrics scroll */}
       <div
         ref={scrollRef}
+        onScroll={handleScroll}
         className="flex-1 overflow-y-auto py-2 px-6 md:px-16 no-scrollbar relative"
         style={{
           msOverflowStyle: "none",
@@ -98,18 +144,26 @@ const LyricsPage: React.FC<LyricsProps> = ({
           </div>
         )}
 
+        <div className="h-12" />
+
         <div className="flex flex-col">
           {lyrics.map((line, i) => {
             const isActive = i === activeIndex;
             return (
               <p
-                id={`lyric-${i}`}
                 key={`${i}-${line.time}`}
-                ref={isActive ? activeRef : null}
-                className={`text-2xl md:text-4xl py-3 md:py-6 font-black leading-tight tracking-tighter transition-all duration-500 origin-left ${
+                ref={(el) => {
+                  if (el) {
+                    lineRefs.current.set(i, el);
+                  } else {
+                    lineRefs.current.delete(i);
+                  }
+                }}
+                onClick={(e) => handleLineClick(e, line.time, i)}
+                className={`text-2xl md:text-4xl py-3 md:py-6 font-black leading-tight tracking-tighter transition-all duration-500 origin-left cursor-pointer ${
                   isActive
                     ? "text-white opacity-100 scale-105"
-                    : "text-black opacity-80 scale-100"
+                    : "text-black opacity-80 scale-100 hover:opacity-60 hover:text-white/60"
                 }`}
               >
                 {line.text}
@@ -118,8 +172,7 @@ const LyricsPage: React.FC<LyricsProps> = ({
           })}
         </div>
 
-        {/* Spacer at bottom */}
-        <div className="h-16" />
+        <div className="h-12" />
       </div>
     </div>
   );
